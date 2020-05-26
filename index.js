@@ -58,20 +58,32 @@ const generateId = () => {
   const id = persons.length > 0 
   ? Math.floor(Math.random() * 99)
   : 0
-
   return id
 }
 
 app.post('/api/persons', (req, res) => {
-  // console.log('req headers', req.headers)
-  // console.log('post request', person)
-  
-  const person = req.body
-  person.id = generateId()
-  
-  persons = persons.concat(person)
 
-  res.json(person)
+  const newPerson = req.body
+
+  if (!newPerson.name || !newPerson.number) {
+    return res.status(400).json({
+      error: 'content missing'
+    })
+  }
+
+  const duplicate = persons.find(person => person.name === newPerson.name)
+
+  if (duplicate) {
+    return res.status(400).json({
+      error: 'name must be unique'
+    })
+  }
+
+  newPerson.id = generateId()
+
+  persons = persons.concat(newPerson)
+
+  res.json(newPerson)
 })
 
 
