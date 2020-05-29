@@ -1,1 +1,1 @@
-https://fathomless-tundra-81713.herokuapp.com/api/persons
+https://fathomless-tundra-81713.herokuapp.com/
